@@ -1,0 +1,9 @@
+{
+  "name": "e-tech",
+  "short_name": "e-tech",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "green",
+  "theme_color": "orange"
+}

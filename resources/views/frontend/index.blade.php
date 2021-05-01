@@ -56,7 +56,7 @@
  @if($category_lists)
 
                 @foreach($category_lists as $cat)
-                    @if($cat->is_parent==1)
+                    @if($cat)
                       {{--  <!-- Single Banner  -->--}}
         <div class="category-slide">
         @if($cat->photo)

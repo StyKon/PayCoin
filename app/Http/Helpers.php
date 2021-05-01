@@ -15,14 +15,14 @@ class Helper{
     }
     public static function getAllCategory(){
         $category=new Category();
-        $menu=$category->getAllParentWithChild();
+        $menu=$category->getAllCategoryHelper();
         return $menu;
     }
 
     public static function getHeaderCategory(){
         $category = new Category();
         // dd($category);
-        $menu=$category->getAllParentWithChild();
+        $menu=$category->getAllCategoryHelper();
 
         if($menu){
             ?>
@@ -32,7 +32,7 @@ class Helper{
                 <ul class="dropdown border-0 shadow">
                 <?php
                     foreach($menu as $cat_info){
-                        if($cat_info->child_cat->count()>0){
+                        /*if($cat_info->child_cat->count()>0){
                             ?>
                             <li><a href="<?php echo route('product-cat',$cat_info->slug); ?>"><?php echo $cat_info->title; ?></a>
                                 <ul class="dropdown sub-dropdown border-0 shadow">
@@ -47,11 +47,11 @@ class Helper{
                             </li>
                             <?php
                         }
-                        else{
+                        else{*/
                             ?>
                                 <li><a href="<?php echo route('product-cat',$cat_info->slug);?>"><?php echo $cat_info->title; ?></a></li>
                             <?php
-                        }
+                      /* }*/
                     }
                     ?>
                 </ul>

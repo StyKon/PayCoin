@@ -112,6 +112,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');
     // Category
     Route::resource('/category','CategoryController');
+    Route::resource('childcategory','ChildCategoryController');
     // Product
     Route::resource('/product','ProductController');
     // Ajax for sub category

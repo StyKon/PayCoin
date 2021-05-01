@@ -9,12 +9,12 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Category Lists</h6>
-      <a href="{{route('category.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Category</a>
+      <h6 class="m-0 font-weight-bold text-primary float-left">Child Category Lists</h6>
+      <a href="{{route('childcategory.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Child Category</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($categories)>0)
+        @if(count($childcategory)>0)
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
@@ -38,31 +38,31 @@
           </tfoot>
           <tbody>
 
-            @foreach($categories as $category)
+            @foreach($childcategorys as $childcategory)
                 <tr>
-                    <td>{{$category->id}}</td>
-                    <td>{{$category->title}}</td>
-                    <td>{{$category->slug}}</td>
+                    <td>{{$childcategory->id}}</td>
+                    <td>{{$childcategory->title}}</td>
+                    <td>{{$childcategory->slug}}</td>
                     <td>
                         @if($category->photo)
-                            <img src="{{$category->photo}}" class="img-fluid" style="max-width:80px" alt="{{$category->photo}}">
+                            <img src="{{$childcategory->photo}}" class="img-fluid" style="max-width:80px" alt="{{$childcategory->photo}}">
                         @else
                             <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid" style="max-width:80px" alt="avatar.png">
                         @endif
                     </td>
                     <td>
                         @if($category->status=='active')
-                            <span class="badge badge-success">{{$category->status}}</span>
+                            <span class="badge badge-success">{{$childcategory->status}}</span>
                         @else
-                            <span class="badge badge-warning">{{$category->status}}</span>
+                            <span class="badge badge-warning">{{$childcategory->status}}</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                    <form method="POST" action="{{route('category.destroy',[$category->id])}}">
+                        <a href="{{route('childcategory.edit',$childcategory->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                    <form method="POST" action="{{route('childcategory.destroy',[$childcategory->id])}}">
                       @csrf
                       @method('delete')
-                          <button class="btn btn-danger btn-sm dltBtn" data-id={{$category->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm dltBtn" data-id={{$childcategory->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     {{-- Delete Modal --}}
@@ -76,7 +76,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('categorys.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('childcategory.destroy',$user->id) }}">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -89,9 +89,9 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$categories->links()}}</span>
+        <span style="float:right">{{$childcategory->links()}}</span>
         @else
-          <h6 class="text-center">No Categories found!!! Please create Category</h6>
+          <h6 class="text-center">No Child Categories found!!! Please create Child Category</h6>
         @endif
       </div>
     </div>

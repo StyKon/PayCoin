@@ -12,10 +12,10 @@ class Product extends Model
         return $this->hasOne('App\Models\Category','id','cat_id');
     }
     public function sub_cat_info(){
-        return $this->hasOne('App\Models\Category','id','child_cat_id');
+        return $this->hasOne('App\Models\SubCategory','id','child_cat_id');
     }
     public static function getAllProduct(){
-        return Product::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
+        return Product::orderBy('id','desc')->paginate(10);
     }
 
     public function rel_prods(){

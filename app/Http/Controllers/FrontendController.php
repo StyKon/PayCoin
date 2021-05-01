@@ -30,7 +30,7 @@ class FrontendController extends Controller
         $banners=Banner::where('status','active')->limit(3)->orderBy('id','DESC')->get();
         // return $banner;
         $products=Product::where('status','active')->get();
-        $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+        $category=Category::where('status','active')->orderBy('title','ASC')->get();
         // return $category;
         return view('frontend.index')
                 ->with('featured',$featured)

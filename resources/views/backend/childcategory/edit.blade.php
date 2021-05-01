@@ -3,14 +3,14 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Edit Category</h5>
+    <h5 class="card-header">Edit Child Category</h5>
     <div class="card-body">
-      <form method="post" action="{{route('category.update',$category->id)}}">
+      <form method="post" action="{{route('childcategory.update',$childcategory->id)}}">
         @csrf 
         @method('PATCH')
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
-          <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$category->title}}" class="form-control">
+          <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$childcategory->title}}" class="form-control">
           @error('title')
           <span class="text-danger">{{$message}}</span>
           @enderror
@@ -18,7 +18,7 @@
 
         <div class="form-group">
           <label for="summary" class="col-form-label">Summary</label>
-          <textarea class="form-control" id="summary" name="summary">{{$category->summary}}</textarea>
+          <textarea class="form-control" id="summary" name="summary">{{$childcategory->summary}}</textarea>
           @error('summary')
           <span class="text-danger">{{$message}}</span>
           @enderror
@@ -44,7 +44,7 @@
                   <i class="fa fa-picture-o"></i> Choose
                   </a>
               </span>
-          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$category->photo}}">
+          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$childcategory->photo}}">
         </div>
         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           @error('photo')
@@ -55,8 +55,8 @@
         <div class="form-group">
           <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
           <select name="status" class="form-control">
-              <option value="active" {{(($category->status=='active')? 'selected' : '')}}>Active</option>
-              <option value="inactive" {{(($category->status=='inactive')? 'selected' : '')}}>Inactive</option>
+              <option value="active" {{(($childcategory->status=='active')? 'selected' : '')}}>Active</option>
+              <option value="inactive" {{(($childcategory->status=='inactive')? 'selected' : '')}}>Inactive</option>
           </select>
           @error('status')
           <span class="text-danger">{{$message}}</span>

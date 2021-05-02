@@ -11,4 +11,7 @@ class ChildCategory extends Model
     public function categorys (){
         return $this->hasOne('App\Models\Category','id','cat_id');
     }
+    public static function getAllChildCategory(){
+        return ChildCategory::orderBy('id','DESC')->paginate(10);
+    }
 }

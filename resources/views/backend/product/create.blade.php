@@ -52,9 +52,9 @@
           <label for="child_cat_id">Sub Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
               <option value="">--Select any category--</option>
-              {{-- @foreach($parent_cats as $key=>$parent_cat)
-                  <option value='{{$parent_cat->id}}'>{{$parent_cat->title}}</option>
-              @endforeach --}}
+               @foreach($childcategorys as $key=>$childcategorys)
+                  <option value='{{$childcategorys->id}}'>{{$childcategorys->title}}</option>
+              @endforeach
           </select>
         </div>
 

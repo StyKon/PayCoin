@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use Illuminate\Support\Str;
 class ChildCategoryController extends Controller
 {
     /**
@@ -14,9 +15,9 @@ class ChildCategoryController extends Controller
      */
     public function index()
     {
-        $childcategory=ChildCategory::getAllCategory();
+        $childcategorys=ChildCategory::getAllChildCategory();
         // return $category;
-        return view('backend.childcategory.index')->with('childcategory',$childcategory);
+        return view('backend.childcategory.index')->with('childcategorys',$childcategorys);
     }
 
     /**
@@ -27,8 +28,8 @@ class ChildCategoryController extends Controller
     public function create()
     {
         
-        $parent_cats=ChildCategory::orderBy('title','ASC')->get();
-        return view('backend.category.create')->with('parent_cats',$parent_cats);
+        $parent_cats=Category::orderBy('title','ASC')->get();
+        return view('backend.childcategory.create')->with('parent_cats',$parent_cats);
     }
 
     /**
@@ -45,6 +46,7 @@ class ChildCategoryController extends Controller
             'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
+            'cat_id'=>'required',
         ]);
         $data= $request->all();
         $slug=Str::slug($request->title);
@@ -85,7 +87,8 @@ class ChildCategoryController extends Controller
     public function edit($id)
     {
         $childcategory=ChildCategory::findOrFail($id);
-        return view('backend.childcategory.edit')->with('childcategory',$childcategory);
+        $parent_cats=Category::get();
+        return view('backend.childcategory.edit')->with('childcategory',$childcategory)->with('parent_cats',$parent_cats);
     }
 
     /**
@@ -104,6 +107,7 @@ class ChildCategoryController extends Controller
              'summary'=>'string|nullable',
              'photo'=>'string|nullable',
              'status'=>'required|in:active,inactive',
+             'cat_id'=>'required',
          ]);
          $data= $request->all();
          // return $data;

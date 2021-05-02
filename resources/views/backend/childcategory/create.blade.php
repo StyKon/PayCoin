@@ -23,15 +23,11 @@
           @enderror
         </div>
 
-        <div class="form-group">
-          <label for="is_parent">Is Parent</label><br>
-          <input type="checkbox" name='is_parent' id='is_parent' value='1' checked> Yes                        
-        </div>
         {{-- {{$parent_cats}} --}}
 
-        <div class="form-group d-none" id='parent_cat_div'>
-          <label for="parent_id">Parent Category</label>
-          <select name="parent_id" class="form-control">
+        <div class="form-group">
+          <label>Parent Category</label>
+          <select name="cat_id" class="form-control">
               <option value="">--Select any category--</option>
               @foreach($parent_cats as $key=>$parent_cat)
                   <option value='{{$parent_cat->id}}'>{{$parent_cat->title}}</option>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ChildCategory;
 use App\Models\Brand;
 use App\Models\Provider;
 
@@ -35,8 +36,9 @@ class ProductController extends Controller
         $brand=Brand::get();
         $provider=Provider::get();
         $category=Category::get();
+        $childcategorys=ChildCategory::get();
         // return $category;
-        return view('backend.product.create')->with('categories',$category)->with('brands',$brand)->with('providers',$provider);
+        return view('backend.product.create')->with('categories',$category)->with('brands',$brand)->with('providers',$provider)->with('childcategorys',$childcategorys);
     }
 
     /**

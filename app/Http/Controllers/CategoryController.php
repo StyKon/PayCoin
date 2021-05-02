@@ -138,7 +138,7 @@ class CategoryController extends Controller
         }
         return redirect()->route('category.index');
     }
-/*
+
     public function getChildByParent(Request $request){
         // return $request->all();
         $category=Category::findOrFail($request->id);
@@ -150,5 +150,5 @@ class CategoryController extends Controller
         else{
             return response()->json(['status'=>true,'msg'=>'','data'=>$child_cat]);
         }
-    }*/
+    }
 }

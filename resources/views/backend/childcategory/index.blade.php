@@ -14,7 +14,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($childcategory)>0)
+        @if(count($childcategorys)>0)
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
@@ -44,14 +44,14 @@
                     <td>{{$childcategory->title}}</td>
                     <td>{{$childcategory->slug}}</td>
                     <td>
-                        @if($category->photo)
+                        @if($childcategory->photo)
                             <img src="{{$childcategory->photo}}" class="img-fluid" style="max-width:80px" alt="{{$childcategory->photo}}">
                         @else
                             <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid" style="max-width:80px" alt="avatar.png">
                         @endif
                     </td>
                     <td>
-                        @if($category->status=='active')
+                        @if($childcategory->status=='active')
                             <span class="badge badge-success">{{$childcategory->status}}</span>
                         @else
                             <span class="badge badge-warning">{{$childcategory->status}}</span>
@@ -89,7 +89,7 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$childcategory->links()}}</span>
+        <span style="float:right">{{$childcategorys->links()}}</span>
         @else
           <h6 class="text-center">No Child Categories found!!! Please create Child Category</h6>
         @endif

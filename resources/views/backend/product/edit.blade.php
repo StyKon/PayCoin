@@ -55,9 +55,17 @@
         @endphp
         {{-- {{$product->child_cat_id}} --}}
         <div class="form-group {{(($product->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
-          <label for="child_cat_id">Sub Category</label>
+          <label for="child_cat_id">Child Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
-              <option value="">--Select any sub category--</option>
+              <option value="">--Select any child category--</option>
+
+          </select>
+        </div>
+        {{-- {{$product->small_cat_id}} --}}
+        <div class="form-group {{(($product->small_cat_id)? '' : 'd-none')}}" id="small_cat_div">
+          <label for="small_cat_id">Small Category</label>
+          <select name="small_cat_id" id="small_cat_id" class="form-control">
+              <option value="">--Select any small category--</option>
 
           </select>
         </div>
@@ -239,8 +247,55 @@
             }
 
         });
-        if(child_cat_id!=null){
-            $('#cat_id').change();
+        if(small_cat_id!=null){
+            $('#child_cat_id').change();
+        }
+        /**************************************** */
+        var  small_cat_id='{{$product->small_cat_id}}';
+        // alert(child_cat_id);
+        $('#child_cat_id').change(function(){
+            var child_cat_id=$(this).val();
+
+            if(child_cat_id !=null){
+                // ajax call
+                $.ajax({
+                    url:"/admin/childcategory/"+child_cat_id+"/small",
+                    type:"POST",
+                    data:{
+                        _token:"{{csrf_token()}}"
+                    },
+                    success:function(response){
+                        if(typeof(response)!='object'){
+                            response=$.parseJSON(response);
+                        }
+                        var html_option="<option value=''>--Select any one--</option>";
+                        if(response.status){
+                            var data=response.data;
+                            if(response.data){
+                                $('#small_cat_div').removeClass('d-none');
+                                $.each(data,function(id,title){
+                                    html_option += "<option value='"+id+"' "+(small_cat_id==id ? 'selected ' : '')+">"+title+"</option>";
+                                });
+                            }
+                            else{
+                                console.log('no response data');
+                            }
+                        }
+                        else{
+                            $('#small_cat_div').addClass('d-none');
+                        }
+                        $('#small_cat_id').html(html_option);
+
+                    }
+                });
+            }
+            else{
+
+            }
+
+        });
+        if(small_cat_id!=null){
+            $('#child_cat_id').change();
         }
 </script>
 @endpush

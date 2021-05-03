@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\PostTag;
 use App\Models\PostCategory;
+use App\Models\ChildCategory;
+use App\Models\SmallCategory;
 use App\Models\Post;
 use App\Models\Cart;
 use App\Models\Brand;
@@ -235,7 +237,7 @@ class FrontendController extends Controller
 
     }
     public function productSubCat(Request $request){
-        $products=Category::getProductBySubCat($request->sub_slug);
+        $products=ChildCategory::getProductBySubCat($request->sub_slug);
         // return $products;
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
@@ -244,6 +246,19 @@ class FrontendController extends Controller
         }
         else{
             return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+        }
+
+    }
+    public function productSmallCat(Request $request){
+        $products=SmallCategory::getProductBySmallCat($request->small_slug);
+        // return $products;
+        $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
+
+        if(request()->is('e-shop.loc/product-grids')){
+            return view('frontend.pages.product-grids')->with('products',$products->small_products)->with('recent_products',$recent_products);
+        }
+        else{
+            return view('frontend.pages.product-lists')->with('products',$products->small_products)->with('recent_products',$recent_products);
         }
 
     }

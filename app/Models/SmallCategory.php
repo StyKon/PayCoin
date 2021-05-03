@@ -14,4 +14,13 @@ class SmallCategory extends Model
     public static function getAllSmallCategory(){
         return SmallCategory::orderBy('id','DESC')->paginate(10);
     }
+    public function small_products(){
+        return $this->hasMany('App\Models\Product','small_cat_id','id')->where('status','active');
+    }
+    
+    public static function getProductBySmallCat($slug){
+        // return $slug;
+        return SmallCategory::with('small_products')->where('slug',$slug)->first();
+    }
+    
 }

@@ -138,4 +138,14 @@ class ChildCategoryController extends Controller
         }
         return redirect()->route('childcategory.index');
     }
+    public function getSmallByParent(Request $request){
+        $childcategory=ChildCategory::findOrFail($request->id);
+        $small_cat=ChildCategory::getSmallByParentID($request->id);
+        if(count($small_cat)<=0){
+            return response()->json(['status'=>false,'msg'=>'','data'=>null]);
+        }
+        else{
+            return response()->json(['status'=>true,'msg'=>'','data'=>$small_cat]);
+        }
+    }
 }

@@ -38,6 +38,7 @@ Route::get('product-detail/{slug}','FrontendController@productDetail')->name('pr
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
 Route::get('/product-cat/{slug}','FrontendController@productCat')->name('product-cat');
 Route::get('/product-sub-cat/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
+Route::get('/product-sub-cat/{slug}/{sub_slug}/{small_slug}','FrontendController@productSmallCat')->name('product-small-cat');
 Route::get('/product-brand/{slug}','FrontendController@productBrand')->name('product-brand');
 // Cart section
 Route::get('/add-to-cart/{slug}','CartController@addToCart')->name('add-to-cart')->middleware('user');
@@ -118,6 +119,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::resource('/product','ProductController');
     // Ajax for sub category
     Route::post('/category/{id}/child','CategoryController@getChildByParent');
+    Route::post('/childcategory/{id}/small','ChildCategoryController@getSmallByParent');
     // POST category
   //  Route::resource('/post-category','PostCategoryController');
     // Post tag

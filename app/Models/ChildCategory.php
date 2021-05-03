@@ -11,6 +11,16 @@ class ChildCategory extends Model
     public function categorys (){
         return $this->hasOne('App\Models\Category','id','cat_id');
     }
+    public static function getSmallByParentID($id){
+        return SmallCategory::where('child_cat_id',$id)->orderBy('id','ASC')->pluck('title','id');
+    }
+    public function sub_products(){
+        return $this->hasMany('App\Models\Product','child_cat_id','id')->where('status','active');
+    }
+    public static function getProductBySubCat($slug){
+        // return $slug;
+        return ChildCategory::with('sub_products')->where('slug',$slug)->first();
+    }
     public static function getAllChildCategory(){
         return ChildCategory::orderBy('id','DESC')->paginate(10);
     }

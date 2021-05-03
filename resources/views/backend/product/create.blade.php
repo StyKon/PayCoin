@@ -49,11 +49,21 @@
         </div>
 
         <div class="form-group d-none" id="child_cat_div">
-          <label for="child_cat_id">Sub Category</label>
+          <label for="child_cat_id">Child Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
               <option value="">--Select any category--</option>
-               @foreach($childcategorys as $key=>$childcategorys)
-                  <option value='{{$childcategorys->id}}'>{{$childcategorys->title}}</option>
+               @foreach($childcategorys as $key=>$childcategory)
+                  <option value='{{$childcategory->id}}'>{{$childcategory->title}}</option>
+              @endforeach
+          </select>
+        </div>
+
+        <div class="form-group d-none" id="small_cat_div">
+          <label for="small_cat_div">Small Category</label>
+          <select name="small_cat_id" id="small_cat_id" class="form-control">
+              <option value="">--Select any category--</option>
+               @foreach($smallcategorys as $key=>$smallcategory)
+                  <option value='{{$smallcategory->id}}'>{{$smallcategory->title}}</option>
               @endforeach
           </select>
         </div>
@@ -211,7 +221,7 @@
             response=$.parseJSON(response)
           }
           // console.log(response);
-          var html_option="<option value=''>----Select sub category----</option>"
+          var html_option="<option value=''>----Select child category----</option>"
           if(response.status){
             var data=response.data;
             // alert(data);
@@ -234,5 +244,47 @@
     else{
     }
   })
+//************************************** */
+$('#child_cat_id').change(function(){
+    var child_cat_id=$(this).val();
+    // alert(cat_id);
+    if(child_cat_id !=null){
+      // Ajax call
+      $.ajax({
+        url:"/admin/childcategory/"+child_cat_id+"/small",
+        data:{
+          _token:"{{csrf_token()}}",
+          id:child_cat_id
+        },
+        type:"POST",
+        success:function(response){
+          if(typeof(response) !='object'){
+            response=$.parseJSON(response)
+          }
+          // console.log(response);
+          var html_option="<option value=''>----Select small category----</option>"
+          if(response.status){
+            var data=response.data;
+            // alert(data);
+            if(response.data){
+              $('#small_cat_div').removeClass('d-none');
+              $.each(data,function(id,title){
+                html_option +="<option value='"+id+"'>"+title+"</option>"
+              });
+            }
+            else{
+            }
+          }
+          else{
+            $('#small_cat_div').addClass('d-none');
+          }
+          $('#small_cat_id').html(html_option);
+        }
+      });
+    }
+    else{
+    }
+  })
+  /********************************************** */
 </script>
 @endpush

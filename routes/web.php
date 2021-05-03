@@ -113,6 +113,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     // Category
     Route::resource('/category','CategoryController');
     Route::resource('childcategory','ChildCategoryController');
+    Route::resource('smallcategory','SmallCategoryController');
     // Product
     Route::resource('/product','ProductController');
     // Ajax for sub category

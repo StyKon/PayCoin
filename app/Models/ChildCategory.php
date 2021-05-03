@@ -14,4 +14,7 @@ class ChildCategory extends Model
     public static function getAllChildCategory(){
         return ChildCategory::orderBy('id','DESC')->paginate(10);
     }
+    public function small_cat(){
+        return $this->hasMany('App\Models\SmallCategory','child_cat_id','id')->where('status','active');
+    }
 }

@@ -16,7 +16,6 @@ class ChildCategoryController extends Controller
     public function index()
     {
         $childcategorys=ChildCategory::getAllChildCategory();
-        // return $category;
         return view('backend.childcategory.index')->with('childcategorys',$childcategorys);
     }
 
@@ -40,7 +39,6 @@ class ChildCategoryController extends Controller
      */
     public function store(Request $request)
     {
-           // return $request->all();
            $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|nullable',
@@ -100,7 +98,6 @@ class ChildCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-         // return $request->all();
          $childcategory=ChildCategory::findOrFail($id);
          $this->validate($request,[
              'title'=>'string|required',
@@ -110,8 +107,7 @@ class ChildCategoryController extends Controller
              'cat_id'=>'required',
          ]);
          $data= $request->all();
-         // return $data;
-         $status=$category->fill($data)->save();
+         $status=$childcategory->fill($data)->save();
          if($status){
              request()->session()->flash('success','Child Category successfully updated');
          }
@@ -138,8 +134,8 @@ class ChildCategoryController extends Controller
             request()->session()->flash('success','Child Category successfully deleted');
         }
         else{
-            request()->session()->flash('error','Error while deleting category');
+            request()->session()->flash('error','Error while deleting childcategory');
         }
-        return redirect()->route('category.index');
+        return redirect()->route('childcategory.index');
     }
 }

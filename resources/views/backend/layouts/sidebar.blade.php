@@ -83,6 +83,20 @@
           </div>
         </div>
     </li>
+    {{--  <!-- SmallCategories --> --}}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#smallcategoryCollapse" aria-expanded="true" aria-controls="smallcategoryCollapse">
+          <i class="fas fa-sitemap"></i>
+          <span>Small Category</span>
+        </a>
+        <div id="smallcategoryCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Small Category Options:</h6>
+            <a class="collapse-item" href="{{route('smallcategory.index')}}">Small Category</a>
+            <a class="collapse-item" href="{{route('smallcategory.create')}}">Add Small Category</a>
+          </div>
+        </div>
+    </li>
 
 
     {{-- Products --}}

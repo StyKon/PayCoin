@@ -208,6 +208,7 @@
     var cat_id=$(this).val();
     // alert(cat_id);
     if(cat_id !=null){
+      alert(cat_id);
       // Ajax call
       $.ajax({
         url:"/admin/category/"+cat_id+"/child",

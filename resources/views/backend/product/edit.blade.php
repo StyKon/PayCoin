@@ -48,11 +48,6 @@
               @endforeach
           </select>
         </div>
-        @php
-          $sub_cat_info=DB::table('categories')->select('title')->where('id',$product->child_cat_id)->get();
-        // dd($sub_cat_info);
-
-        @endphp
         {{-- {{$product->child_cat_id}} --}}
         <div class="form-group {{(($product->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
           <label for="child_cat_id">Child Category</label>
@@ -62,6 +57,7 @@
           </select>
         </div>
         {{-- {{$product->small_cat_id}} --}}
+
         <div class="form-group {{(($product->small_cat_id)? '' : 'd-none')}}" id="small_cat_div">
           <label for="small_cat_id">Small Category</label>
           <select name="small_cat_id" id="small_cat_id" class="form-control">
@@ -205,6 +201,8 @@
 
 <script>
   var  child_cat_id='{{$product->child_cat_id}}';
+  var  small_cat_id='{{$product->small_cat_id}}';
+  
         // alert(child_cat_id);
         $('#cat_id').change(function(){
             var cat_id=$(this).val();
@@ -238,20 +236,22 @@
                             $('#child_cat_div').addClass('d-none');
                         }
                         $('#child_cat_id').html(html_option);
-
+                        if(small_cat_id!=null){
+            $('#child_cat_id').change();
+        }
                     }
                 });
             }
             else{
-
             }
 
         });
-        if(small_cat_id!=null){
-            $('#child_cat_id').change();
+        if(child_cat_id!=null){
+            $('#cat_id').change();
         }
         /**************************************** */
-        var  small_cat_id='{{$product->small_cat_id}}';
+  
+ 
         // alert(child_cat_id);
         $('#child_cat_id').change(function(){
             var child_cat_id=$(this).val();
@@ -294,8 +294,5 @@
             }
 
         });
-        if(small_cat_id!=null){
-            $('#child_cat_id').change();
-        }
 </script>
 @endpush

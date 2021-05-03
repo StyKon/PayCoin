@@ -122,15 +122,11 @@ class ProductController extends Controller
         $provider=Provider::get();
         $product=Product::findOrFail($id);
         $category=Category::get();
-        $childcategory=ChildCategory::get();
-        $smallcategory=SmallCategory::get();
         $items=Product::where('id',$id)->get();
         // return $items;
         return view('backend.product.edit')->with('product',$product)
                     ->with('brands',$brand)
                     ->with('providers',$provider)
-                    ->with('smallcategorys',$smallcategory)
-                    ->with('childcategorys',$childcategory)
                     ->with('categories',$category)->with('items',$items);
     }
 

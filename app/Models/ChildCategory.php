@@ -14,6 +14,9 @@ class ChildCategory extends Model
     public static function getSmallByParentID($id){
         return SmallCategory::where('child_cat_id',$id)->orderBy('id','ASC')->pluck('title','id');
     }
+    public function provider(){
+        return $this->hasMany('App\Models\Provider','child_cat_id','id');
+    }
     public function sub_products(){
         return $this->hasMany('App\Models\Product','child_cat_id','id')->where('status','active');
     }

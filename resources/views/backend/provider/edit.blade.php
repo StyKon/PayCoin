@@ -63,6 +63,25 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
+
+        <div class="form-group">
+          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <select name="cat_id" id="cat_id" class="form-control">
+              <option value="">--Select any category--</option>
+              @foreach($categories as $key=>$cat_data)
+                  <option value='{{$cat_data->id}}' {{(($provider->cat_id==$cat_data->id)? 'selected' : '')}}>{{$cat_data->title}}</option>
+              @endforeach
+          </select>
+        </div>
+        {{-- {{$product->child_cat_id}} --}}
+        <div class="form-group {{(($provider->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
+          <label for="child_cat_id">Child Category</label>
+          <select name="child_cat_id" id="child_cat_id" class="form-control">
+              <option value="">--Select any child category--</option>
+
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Logo <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -160,5 +179,56 @@ map.addMarker({
     }
 });
 @endisset
+</script>
+
+<script>
+  var  child_cat_id='{{$provider->child_cat_id}}';
+  
+        // alert(child_cat_id);
+        $('#cat_id').change(function(){
+            var cat_id=$(this).val();
+
+            if(cat_id !=null){
+                // ajax call
+                $.ajax({
+                    url:"/admin/category/"+cat_id+"/child",
+                    type:"POST",
+                    data:{
+                        _token:"{{csrf_token()}}"
+                    },
+                    success:function(response){
+                        if(typeof(response)!='object'){
+                            response=$.parseJSON(response);
+                        }
+                        var html_option="<option value=''>--Select any one--</option>";
+                        if(response.status){
+                            var data=response.data;
+                            if(response.data){
+                                $('#child_cat_div').removeClass('d-none');
+                                $.each(data,function(id,title){
+                                    html_option += "<option value='"+id+"' "+(child_cat_id==id ? 'selected ' : '')+">"+title+"</option>";
+                                });
+                            }
+                            else{
+                                console.log('no response data');
+                            }
+                        }
+                        else{
+                            $('#child_cat_div').addClass('d-none');
+                        }
+                        $('#child_cat_id').html(html_option);
+                     
+                    }
+                });
+            }
+            else{
+            }
+
+        });
+        if(child_cat_id!=null){
+            $('#cat_id').change();
+        }
+        /**************************************** */
+  
 </script>
 @endpush

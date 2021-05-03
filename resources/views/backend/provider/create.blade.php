@@ -63,6 +63,25 @@
         @enderror
         </div>
         <div class="form-group">
+          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <select name="cat_id" id="cat_id" class="form-control">
+              <option value="">--Select any category--</option>
+              @foreach($categories as $key=>$cat_data)
+                  <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
+              @endforeach
+          </select>
+        </div>
+
+        <div class="form-group d-none" id="child_cat_div">
+          <label for="child_cat_id">Child Category</label>
+          <select name="child_cat_id" id="child_cat_id" class="form-control">
+              <option value="">--Select any child category--</option>
+               @foreach($childcategorys as $key=>$childcategory)
+                  <option value='{{$childcategory->id}}'>{{$childcategory->title}}</option>
+              @endforeach
+          </select>
+        </div>
+        <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Logo <span class="text-danger">*</span></label>
           <div class="input-group">
               <span class="input-group-btn">
@@ -162,6 +181,49 @@ map.addMarker({
     }
 });
 @endisset
+</script>
+
+<script>
+  $('#cat_id').change(function(){
+    var cat_id=$(this).val();
+    // alert(cat_id);
+    if(cat_id !=null){
+      // Ajax call
+      $.ajax({
+        url:"/admin/category/"+cat_id+"/child",
+        data:{
+          _token:"{{csrf_token()}}",
+          id:cat_id
+        },
+        type:"POST",
+        success:function(response){
+          if(typeof(response) !='object'){
+            response=$.parseJSON(response)
+          }
+          // console.log(response);
+          var html_option="<option value=''>----Select child category----</option>"
+          if(response.status){
+            var data=response.data;
+            // alert(data);
+            if(response.data){
+              $('#child_cat_div').removeClass('d-none');
+              $.each(data,function(id,title){
+                html_option +="<option value='"+id+"'>"+title+"</option>"
+              });
+            }
+            else{
+            }
+          }
+          else{
+            $('#child_cat_div').addClass('d-none');
+          }
+          $('#child_cat_id').html(html_option);
+        }
+      });
+    }
+    else{
+    }
+  })
 </script>
 @endpush
 

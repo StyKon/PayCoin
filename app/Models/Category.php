@@ -28,6 +28,9 @@ class Category extends Model
     */public function child_cat(){
         return $this->hasMany('App\Models\ChildCategory','cat_id','id')->where('status','active');
     }
+    public function providers(){
+        return $this->hasMany('App\Models\Provider','cat_id','id');
+    }
     public static function getAllParentWithChild(){
         return Category::with('child_cat')->where('status','active')->orderBy('title','ASC')->get();
     }

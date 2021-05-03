@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Provider;
+use App\Models\Category;
+use App\Models\ChildCategory;
 use Illuminate\Support\Str;
 
 class ProviderController extends Controller
@@ -26,7 +28,9 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        return view('backend.provider.create');
+        $categorys=Category::get();
+        $childcategorys=ChildCategory::get();
+        return view('backend.provider.create')->with('categories',$categorys)->with('childcategorys',$childcategorys);
     }
 
     /**
@@ -48,6 +52,8 @@ class ProviderController extends Controller
             'logo'=>'string|required',
             'lat'=>'string|required',
             'long'=>'string|required',
+            'cat_id'=>'nullable|exists:categories,id',
+            'child_cat_id'=>'nullable|exists:child_categories,id',
         ]);
         $data=$request->all();
         $status=Provider::create($data);
@@ -80,10 +86,12 @@ class ProviderController extends Controller
     public function edit($id)
     {
         $provider=Provider::find($id);
+        $categorys=Category::get();
+        $childcategorys=ChildCategory::get();
         if(!$provider){
             request()->session()->flash('error','Provider not found');
         }
-        return view('backend.provider.edit')->with('provider',$provider);
+        return view('backend.provider.edit')->with('provider',$provider)->with('categories',$categorys)->with('childcategorys',$childcategorys);
     }
 
     /**
@@ -107,6 +115,8 @@ class ProviderController extends Controller
             'logo'=>'string|required',
             'lat'=>'string|required',
             'long'=>'string|required',
+            'cat_id'=>'nullable|exists:categories,id',
+            'child_cat_id'=>'nullable|exists:child_categories,id',
         ]);
         $data=$request->all();
 

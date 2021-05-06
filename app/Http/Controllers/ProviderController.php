@@ -7,7 +7,7 @@ use App\Models\Provider;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 class ProviderController extends Controller
 {
     /**
@@ -57,6 +57,7 @@ class ProviderController extends Controller
         ]);
         $data=$request->all();
         $status=Provider::create($data);
+        $status->childcategorys()->sync($request->child_cat_id);
         if($status){
             request()->session()->flash('success','Provider successfully created');
         }
@@ -88,10 +89,11 @@ class ProviderController extends Controller
         $provider=Provider::find($id);
         $categorys=Category::get();
         $childcategorys=ChildCategory::get();
+        $child_cat_id=json_encode(DB::select('select child_cat_id from child_categories_providers where provider_id = ?', [$id]));
         if(!$provider){
             request()->session()->flash('error','Provider not found');
         }
-        return view('backend.provider.edit')->with('provider',$provider)->with('categories',$categorys)->with('childcategorys',$childcategorys);
+        return view('backend.provider.edit')->with('provider',$provider)->with('categories',$categorys)->with('childcategorys',$childcategorys)->with('child_cat_id',$child_cat_id);
     }
 
     /**
@@ -121,6 +123,7 @@ class ProviderController extends Controller
         $data=$request->all();
 
         $status=$provider->fill($data)->save();
+        $provider->childcategorys()->sync($request->child_cat_id);
         if($status){
             request()->session()->flash('success','Provider successfully updated');
         }

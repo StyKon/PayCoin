@@ -59,6 +59,10 @@ Version:1.0
 .color-plate.active{
 	right:0;
 }
+.sleft{
+	background: #F6F7FB;
+}
+
 .color-plate .color-plate-icon {
 	position: absolute;
 	left: -48px;
@@ -729,6 +733,7 @@ Version:1.0
 	color:#fff;
 	background:#F7941D;
 }
+
 /* Search Form */
 .header.shop .search-top {
 	opacity: 1;

@@ -74,7 +74,7 @@
 
         <div class="form-group d-none" id="child_cat_div">
           <label for="child_cat_id">Child Category</label>
-          <select name="child_cat_id" id="child_cat_id" class="form-control">
+          <select name="child_cat_id[]" id="child_cat_id" class="form-control" multiple>
               <option value="">--Select any child category--</option>
                @foreach($childcategorys as $key=>$childcategory)
                   <option value='{{$childcategory->id}}'>{{$childcategory->title}}</option>

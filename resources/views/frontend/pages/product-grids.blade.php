@@ -66,39 +66,6 @@
                                     </ul>
                                 </div>
                                 {{--<!--/ End Single Widget -->--}}
-                               {{-- <!-- Shop By Price -->--}}
-                                    <div class="single-widget range">
-                                        <h3 class="title">Shop by Price</h3>
-                                        <div class="price-filter">
-                                            <div class="price-filter-inner">
-                                                @php
-                                                    $max=DB::table('products')->max('price');
-                                                    // dd($max);
-                                                @endphp
-                                                <div id="slider-range" data-min="0" data-max="{{$max}}"></div>
-                                                <div class="product_filter">
-                                                <button type="submit" class="filter_button">Filter</button>
-                                                <div class="label-input">
-                                                    <span>Range:</span>
-                                                    <input style="" type="text" id="amount" readonly/>
-                                                    <input type="hidden" name="price_range" id="price_range" value="@if(!empty($_GET['price'])){{$_GET['price']}}@endif"/>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <ul class="check-box-list">
-                                            <li>
-                                                <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">$20 - $50<span class="count">(3)</span></label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">$50 - $100<span class="count">(5)</span></label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">$100 - $250<span class="count">(8)</span></label>
-                                            </li>
-                                        </ul> --}}
-                                    </div>
-                                   {{-- <!--/ End Shop By Price -->--}}
                                {{-- <!-- Single Widget -->--}}
                                 <div class="single-widget recent-post">
                                     <h3 class="title">Recent post</h3>

@@ -26,9 +26,7 @@ class CreateProvidersTable extends Migration
             $table->string('lat')->nullable();
             $table->string('long')->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();
-            $table->unsignedBigInteger('child_cat_id')->nullable();
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('SET NULL');
-            $table->foreign('child_cat_id')->references('id')->on('child_categories')->onDelete('SET NULL');
             $table->timestamps();
         });
     }

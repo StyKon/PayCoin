@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Provider extends Model
 {
-    protected $fillable=['companyname','firstname','lastname','phone1','phone2','adresse','email','logo','lat','long','cat_id','child_cat_id'];
+    protected $fillable=['companyname','firstname','lastname','phone1','phone2','adresse','email','logo','lat','long','cat_id'];
 
 
     public function products(){
@@ -16,7 +16,7 @@ class Provider extends Model
         return $this->hasOne('App\Models\Category','cat_id','id');
     }
     public function childcategorys(){
-        return $this->hasMany('App\Models\ChildCategory','child_cat_id','id');
+        return $this->belongsToMany( 'App\Models\ChildCategory', 'child_categories_providers', 'provider_id', 'child_cat_id' );
     }
 
 }

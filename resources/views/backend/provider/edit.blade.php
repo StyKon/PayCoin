@@ -73,10 +73,11 @@
               @endforeach
           </select>
         </div>
+        
         {{-- {{$product->child_cat_id}} --}}
         <div class="form-group {{(($provider->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
           <label for="child_cat_id">Child Category</label>
-          <select name="child_cat_id" id="child_cat_id" class="form-control">
+          <select name="child_cat_id[]" id="child_cat_id" class="form-control" multiple>
               <option value="">--Select any child category--</option>
 
           </select>
@@ -182,8 +183,7 @@ map.addMarker({
 </script>
 
 <script>
-  var  child_cat_id='{{$provider->child_cat_id}}';
-  
+  var  child_cat_id='{{$child_cat_id}}'.match(/\d/g);
         // alert(child_cat_id);
         $('#cat_id').change(function(){
             var cat_id=$(this).val();
@@ -206,7 +206,7 @@ map.addMarker({
                             if(response.data){
                                 $('#child_cat_div').removeClass('d-none');
                                 $.each(data,function(id,title){
-                                    html_option += "<option value='"+id+"' "+(child_cat_id==id ? 'selected ' : '')+">"+title+"</option>";
+                                    html_option += "<option value='"+id+"' "+(child_cat_id.includes(id) ? 'selected ' : '')+">"+title+"</option>";
                                 });
                             }
                             else{

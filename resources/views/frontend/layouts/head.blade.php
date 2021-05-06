@@ -37,6 +37,8 @@
 {{--<!-- Eshop StyleSheet -->--}}
 <link rel="stylesheet" href="{{asset('frontend/css/reset.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
+
+<link rel="stylesheet" href="{{asset('frontend/css/categorylist.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/slick/slick.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/bottomnavigationbar.css')}}">
@@ -63,4 +65,14 @@
 
 
 </style>
+
+@if($agent->isMobile())
+<style>
+.l-flex-child {
+    height: 100vh;
+    overflow: auto;
+	padding-bottom:80px;
+}
+</style>
+@endif
 @stack('styles')

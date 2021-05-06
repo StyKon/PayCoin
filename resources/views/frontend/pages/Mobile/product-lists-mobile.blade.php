@@ -22,7 +22,6 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-3 l-flex-child sleft">
-        categorie
       <div class="option">
         <img src="https://www.paycoin.tn/storage/photos/1/food_120px.png" >   
         <div class="category">T-shirts</div>
@@ -76,7 +75,8 @@
 											@foreach($menu as $cat_info)
 													@if($cat_info->child_cat->count()>0)
 													@foreach($cat_info->child_cat as $sub_menu)
-            <div class="link"><i class="fa fa-database"></i>{{$sub_menu->title}}<i class="fa fa-chevron-down"></i></div>
+               <div class="default open">
+            <div class="link">  {{$sub_menu->title}}<i class="fa fa-chevron-down"></i></div>
               <div class="submenu l-flex-child-2">
                 <div class="row">
                     <div class="col-4 remove-padding"><img src="http://fakeimg.pl/365x365/"><h8>T-shirts</h8> </div>
@@ -85,6 +85,7 @@
                     <div class="col-4 remove-padding"><img src="http://fakeimg.pl/365x365/"> <h8>T-shirts</h8> </div>
                 </div>
               </div>
+</div>
               @endforeach
 														
 																
@@ -125,7 +126,7 @@ $(function() {
 		$next.slideToggle();
 		$this.parent().toggleClass('open');
 
-		if (!e.data.multiple) {
+		if (e.data.multiple) {
 			$el.find('.submenu').not($next).slideUp().parent().removeClass('open');
 		};
 	}	

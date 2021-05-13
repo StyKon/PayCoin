@@ -25,12 +25,12 @@
     <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
     <div class="option">
         <img src="https://www.paycoin.tn/storage/photos/1/food_120px.png" data-filter="*">
-        <div class="category">All</div>
+        <div class="category"><div class="b">All</div></div>
       </div>
     @foreach($smallcategorys as $smallcat)
       <div class="option">
         <img src="{{$smallcat->photo}}" data-filter=".{{$smallcat->id}}">
-        <div class="category">{{$smallcat->title}} </div>
+        <div class="category"><div class="b">{{$smallcat->title}}</div> </div>
       </div>
     @endforeach
     </ul>

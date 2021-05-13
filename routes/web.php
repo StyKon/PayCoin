@@ -36,8 +36,8 @@ Route::get('/contact','FrontendController@contact')->name('contact');
 Route::post('/contact/message','MessageController@store')->name('contact.store');
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
-Route::get('/category-provider/{slug}','FrontendController@productCat')->name('product-cat');
-//Route::get('/category-provider/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
+Route::get('/category-provider','FrontendController@productCat')->name('product-cat');
+//Route::get('/category-product/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
 Route::get('/category-provider/{slug}/{sub_slug}/{slug_provider}','FrontendController@productProvider')->name('product-provider');
 Route::get('/product-brand/{slug}','FrontendController@productBrand')->name('product-brand');
 // Cart section

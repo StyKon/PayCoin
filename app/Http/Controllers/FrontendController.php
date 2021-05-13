@@ -225,7 +225,7 @@ class FrontendController extends Controller
     }
     public function productCat(Request $request){
         $categorys=Category::get();
-        $menu=Category::getAllChildBySlagCat($request->slug);
+        $menu=Category::getAllParentWithChild();
 
         if(request()->is('e-shop.loc/product-grids')){
             return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);

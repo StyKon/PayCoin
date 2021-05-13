@@ -34,6 +34,10 @@ class Category extends Model
     public static function getAllParentWithChild(){
         return Category::with('child_cat')->where('status','active')->orderBy('title','ASC')->get();
     }
+    public static function getAllChildBySlagCat($slug){
+        return Category::with('child_cat')->where('slug',$slug)->where('status','active')->orderBy('title','ASC')->get();
+    }
+
     public function products(){
         return $this->hasMany('App\Models\Product','cat_id','id')->where('status','active');
     }

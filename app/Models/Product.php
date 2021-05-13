@@ -17,7 +17,7 @@ class Product extends Model
     public function small_cat_info(){
         return $this->hasOne('App\Models\SmallCategory','id','small_cat_id');
     }
-    
+
     public static function getAllProduct(){
         return Product::orderBy('id','desc')->paginate(10);
     }
@@ -47,4 +47,20 @@ class Product extends Model
         return $this->hasMany(Wishlist::class)->whereNotNull('cart_id');
     }
 
+
+    public static function getProductByChildCategoryAndProvider($sub_slug,$slug_provider){
+        return Product::select('products.*')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
+        ->where('child_categories.slug',$sub_slug)
+        ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
+        ->where('providers.slug',$slug_provider)->where('products.status','active')->get();
+    }
+
+
+    public static function getSmallCatByChildCategoryAndProvider($sub_slug,$slug_provider){
+        return Product::select('small_categories.id')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
+        ->where('child_categories.slug',$sub_slug)
+        ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
+        ->where('providers.slug',$slug_provider)->where('products.status','active')
+        ->leftJoin('small_categories', 'products.small_cat_id', '=', 'small_categories.id')->groupBy('small_categories.id')->get()->toArray();
+   }
 }

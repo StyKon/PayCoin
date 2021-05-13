@@ -73,7 +73,7 @@
               @endforeach
           </select>
         </div>
-        
+
         {{-- {{$product->child_cat_id}} --}}
         <div class="form-group {{(($provider->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
           <label for="child_cat_id">Child Category</label>
@@ -104,13 +104,13 @@
         </div>
         <div class="col-md-6">
         <div class="form-group">
-        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{$provider->lat}}" class="form-control" disabled>
+        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{$provider->lat}}" class="form-control" >
         @error('lat')
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
         <div class="form-group">
-         <input id="long" type="text" name="long" placeholder="Long"  value="{{$provider->long}}" class="form-control" disabled>
+         <input id="long" type="text" name="long" placeholder="Long"  value="{{$provider->long}}" class="form-control" >
         @error('long')
         <span class="text-danger">{{$message}}</span>
         @enderror
@@ -217,7 +217,7 @@ map.addMarker({
                             $('#child_cat_div').addClass('d-none');
                         }
                         $('#child_cat_id').html(html_option);
-                     
+
                     }
                 });
             }
@@ -229,6 +229,6 @@ map.addMarker({
             $('#cat_id').change();
         }
         /**************************************** */
-  
+
 </script>
 @endpush

@@ -56,6 +56,12 @@ class ProviderController extends Controller
             'child_cat_id'=>'nullable|exists:child_categories,id',
         ]);
         $data=$request->all();
+        $slug=Str::slug($request->companyname);
+        $count=Provider::where('slug',$slug)->count();
+        if($count>0){
+            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        }
+        $data['slug']=$slug;
         $status=Provider::create($data);
         $status->childcategorys()->sync($request->child_cat_id);
         if($status){

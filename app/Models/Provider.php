@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Provider extends Model
 {
-    protected $fillable=['companyname','firstname','lastname','phone1','phone2','adresse','email','logo','lat','long','cat_id'];
+    protected $fillable=['companyname','slug','firstname','lastname','phone1','phone2','adresse','email','logo','lat','long','cat_id'];
 
 
     public function products(){

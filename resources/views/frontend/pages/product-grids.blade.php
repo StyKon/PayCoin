@@ -143,6 +143,7 @@
                             </div>
                         </div>
                         <div class="row">
+
                             {{-- {{$products}} --}}
                             @if(count($products)>0)
                                 @foreach($products as $product)

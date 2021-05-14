@@ -22,25 +22,27 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-3 l-flex-child-2 sleft">
-    <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
+    <div id="myBtnContainer">
     <div class="option">
-        <img src="https://www.paycoin.tn/storage/photos/1/food_120px.png" data-filter="*">
+<a class="FilterClick" onclick="filterSelection('all')">
+        <img src="https://www.paycoin.tn//storage/photos/1/food_120px.png">
         <div class="category"><div class="b">All</div></div>
-      </div>
-    @foreach($smallcategorys as $smallcat)
+      </div></a>
+        @foreach($childcategorys as $childcategory)
       <div class="option">
-        <img src="{{$smallcat->photo}}" data-filter=".{{$smallcat->id}}">
-        <div class="category"><div class="b">{{$smallcat->title}}</div> </div>
-      </div>
-    @endforeach
-    </ul>
+<a class="FilterClick" onclick="filterSelection('{{$childcategory->id}}')">
+        <img src="{{$childcategory->photo}}">
+        <div class="category"><div class="b">{{$childcategory->title}}</div></div>
+      </div></a>
+        @endforeach
+</div>
     </div>
     <div class="col-9 l-flex-child">
-      <div class="row tab-content isotope-grid" id="myTabContent">
+      <div class="row scrolling-pagination">
 
       @if(count($products))
 	   @foreach($products as $product)
-       <div class="col-6  isotope-item {{$product->small_cat_id}}">
+       <div class="col-6 filterDiv {{$product->child_cat_id}} ">
                                         <div class="single-product">
                                             <div class="product-img">
                                                 <a href="{{route('product-detail',$product->slug)}}">
@@ -78,10 +80,10 @@
 	  @else
 		<h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
       @endif
+      {{$products->links()}}
+        </div>
 
     </div>
-
-  </div>
 
   </section>
 			{{--<!--/ End Product Style 1  -->--}}
@@ -120,51 +122,85 @@ $(function() {
 
 
 </script>
+
+<style>
+    .filterDiv {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+.scrolling-pagination {
+    overflow : hidden;
+}
+</style>
+
 <script>
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
 
-/*==================================================================
-[ Isotope ]*/
-var $topeContainer = $('.isotope-grid');
-var $filter = $('.filter-tope-group');
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
 
-// filter items on button click
-$filter.each(function () {
-    $filter.on('click', 'img', function () {
-        var filterValue = $(this).attr('data-filter');
-        $topeContainer.isotope({filter: filterValue});
-    });
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);
+    }
+  }
+  element.className = arr1.join(" ");
+}
 
-});
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("FilterClick");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>
 
-// init Isotope
-$(window).on('load', function () {
-    var $grid = $topeContainer.each(function () {
-        $(this).isotope({
-            itemSelector: '.isotope-item',
-            layoutMode: 'fitRows',
-            percentPosition: true,
-            animationEngine : 'best-available',
-            masonry: {
-                columnWidth: '.isotope-item'
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
+<script type="text/javascript">
+    $('ul.pagination').hide();
+    $(function() {
+        $('.scrolling-pagination').jscroll({
+            autoTrigger: true,
+            padding: 0,
+            nextSelector: '.pagination li.active + li a',
+            contentSelector: 'div.scrolling-pagination',
+            callback: function() {
+                $('ul.pagination').remove();
+                 $(".scrolling-pagination").css({'margin-left': 0 , 'margin-right':0});
+                $(".l-flex-child").css({'padding-right': 0 , 'padding-left':0});
             }
         });
     });
-});
-
-var isotopeButton = $('.filter-tope-group button');
-
-$(isotopeButton).each(function(){
-    $(this).on('click', function(){
-        for(var i=0; i<isotopeButton.length; i++) {
-            $(isotopeButton[i]).removeClass('how-active1');
-        }
-        $(this).addClass('how-active1');
-    });
-});
 </script>
 <style>
 .col-6{
- padding-left:2px;
-padding-right:2px;
+ padding-left:5px;
+padding-right:5px;
 }</style>
 @endpush

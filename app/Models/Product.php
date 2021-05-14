@@ -47,7 +47,11 @@ class Product extends Model
         return $this->hasMany(Wishlist::class)->whereNotNull('cart_id');
     }
 
-
+    public static function getProductByCategorySlug($slug){
+        return Product::select('products.*')->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
+        ->where('products.status','active')->paginate(8);
+    }
     public static function getProductByChildCategoryAndProvider($sub_slug,$slug_provider){
         return Product::select('products.*')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
         ->where('child_categories.slug',$sub_slug)

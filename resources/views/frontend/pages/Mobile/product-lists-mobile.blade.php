@@ -21,7 +21,7 @@
 <section class="product-area shop-sidebar shop-list shop section">
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3 l-flex-child sleft">
+    <div class="col-3 l-flex-child-2 sleft">
     <div class="option">
 <a onclick="filterSelection('all')">
         <img src="https://www.paycoin.tn//storage/photos/1/food_120px.png">
@@ -36,9 +36,9 @@
         @endforeach
 
     </div>
-    <div class="col-9 l-flex-child-2">
+    <div class="col-9 l-flex-child">
       <div class="row">
-      <div id="accordion" class="accordion">
+      <div id="accordion" class="accordion l-flex-child-2">
 										@if($menu)
 
 											@foreach($menu as $cat_info)
@@ -46,7 +46,7 @@
 													@foreach($cat_info->child_cat as $sub_menu)
                <div class="default open filterDiv {{$sub_menu->cat_id}}">
             <div class="link">  {{$sub_menu->title}} <i class="fa fa-chevron-down"></i></div>
-              <div class="submenu l-flex-child-2">
+              <div class="submenu ">
                 <div class="row">
                 @foreach($sub_menu->providers as $provider)
                     <div class="col-4 remove-padding"><a href="{{route('product-provider',[$cat_info->slug,$sub_menu->slug,$provider->slug])}}"><img src="{{$provider->logo}}"><h8>{{$provider->companyname}}</h8>  </a></div>

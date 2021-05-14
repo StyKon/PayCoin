@@ -73,6 +73,11 @@
     overflow: auto;
 	padding-bottom:80px;
 }
+.l-flex-child-2 {
+    height: 100vh;
+    overflow: auto;
+	padding-bottom:80px;
+}
 </style>
 @endif
 @stack('styles')

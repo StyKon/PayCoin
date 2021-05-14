@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class User
+class Livreur
 {
     /**
      * Handle an incoming request.
@@ -15,12 +15,12 @@ class User
      */
     public function handle($request, Closure $next)
     {
-        if(empty(session('user'))){
-            return redirect()->route('login.form');
-        }
-        else{
+        if($request->user()->role=='livreur'){
             return $next($request);
         }
-
+        else{
+            request()->session()->flash('error','You do not have any permission to access this page');
+            return redirect()->route($request->user()->role);
+        }
     }
 }

@@ -56,51 +56,12 @@ class FrontendController extends Controller
         return view('frontend.pages.product_detail')->with('product_detail',$product_detail);
     }
 
-    public function productGrids(){
-        $products=Product::query();
+    public function productGrids(Request $request){
+        $childcategorys=Category::getAllChildBySlagCat($request->slug);
+        $products=Product::getProductByCategorySlug($request->slug);
 
-        if(!empty($_GET['category'])){
-            $slug=explode(',',$_GET['category']);
-            // dd($slug);
-            $cat_ids=Category::select('id')->whereIn('slug',$slug)->pluck('id')->toArray();
-            // dd($cat_ids);
-            $products->whereIn('cat_id',$cat_ids);
-            // return $products;
-        }
-        if(!empty($_GET['brand'])){
-            $slugs=explode(',',$_GET['brand']);
-            $brand_ids=Brand::select('id')->whereIn('slug',$slugs)->pluck('id')->toArray();
-            return $brand_ids;
-            $products->whereIn('brand_id',$brand_ids);
-        }
-        if(!empty($_GET['sortBy'])){
-            if($_GET['sortBy']=='title'){
-                $products=$products->where('status','active')->orderBy('title','ASC');
-            }
-            if($_GET['sortBy']=='price'){
-                $products=$products->orderBy('price','ASC');
-            }
-        }
-
-        if(!empty($_GET['price'])){
-            $price=explode('-',$_GET['price']);
-            // return $price;
-            // if(isset($price[0]) && is_numeric($price[0])) $price[0]=floor(Helper::base_amount($price[0]));
-            // if(isset($price[1]) && is_numeric($price[1])) $price[1]=ceil(Helper::base_amount($price[1]));
-
-            $products->whereBetween('price',$price);
-        }
-
-        $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        // Sort by number
-        if(!empty($_GET['show'])){
-            $products=$products->where('status','active')->paginate($_GET['show']);
-        }
-        else{
-            $products=$products->where('status','active')->paginate(9);
-        }
         // Sort by name , price, category
-        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
+        return view('frontend.pages.product-grids')->with('products',$products)->with('childcategorys',$childcategorys->child_cat);
 
     }
     public function productLists(){
@@ -377,7 +338,7 @@ class FrontendController extends Controller
     }
     public function loginSubmit(Request $request){
         $data= $request->all();
-        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active','role'=>'user'])){
             Session::put('user',$data['email']);
             request()->session()->flash('success','Successfully login');
             return redirect()->route('home');

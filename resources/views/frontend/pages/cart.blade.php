@@ -91,7 +91,7 @@
 								@else
 										<tr>
 											<td class="text-center">
-												There are no any carts available. <a href="{{route('product-grids')}}" style="color:blue;">Continue shopping</a>
+												There are no any carts available. <a href="{{route('product-cat')}}" style="color:blue;">Continue shopping</a>
 
 											</td>
 										</tr>
@@ -167,7 +167,7 @@
 									</ul>
 									<div class="button5">
 										<a href="{{route('checkout')}}" class="btn">Checkout</a>
-										<a href="{{route('product-grids')}}" class="btn">Continue shopping</a>
+										<a href="{{route('product-cat')}}" class="btn">Continue shopping</a>
 									</div>
 								</div>
 							</div>

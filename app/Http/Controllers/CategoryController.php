@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ChildCategory;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -53,7 +54,7 @@ class CategoryController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        // return $data;   
+        // return $data;
         $status=Category::create($data);
         if($status){
             request()->session()->flash('success','Category successfully added');
@@ -129,7 +130,7 @@ class CategoryController extends Controller
         $category=Category::findOrFail($id);
         // return $child_cat_id;
         $status=$category->delete();
-        
+
         if($status){
             request()->session()->flash('success','Category successfully deleted');
         }
@@ -141,9 +142,20 @@ class CategoryController extends Controller
 
     public function getChildByParent(Request $request){
         // return $request->all();
-        $category=Category::findOrFail($request->id);
+
+        $category=Category::find($request->id);
         $child_cat=Category::getChildByParentID($request->id);
-        // return $child_cat;
+        if(count($child_cat)<=0){
+            return response()->json(['status'=>false,'msg'=>'','data'=>null]);
+        }
+        else{
+            return response()->json(['status'=>true,'msg'=>'','data'=>$child_cat]);
+        }
+    }
+    public function getChildByParentForProvider(Request $request){
+        // return $request->all();
+        $category=Category::find(explode(',',$request->id));
+        $child_cat=ChildCategory::whereIn('cat_id',(explode(',',$request->id)))->pluck('title','id');
         if(count($child_cat)<=0){
             return response()->json(['status'=>false,'msg'=>'','data'=>null]);
         }

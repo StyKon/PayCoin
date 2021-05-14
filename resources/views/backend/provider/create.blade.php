@@ -64,7 +64,7 @@
         </div>
         <div class="form-group">
           <label for="cat_id">Category <span class="text-danger">*</span></label>
-          <select name="cat_id" id="cat_id" class="form-control">
+          <select name="cat_id" id="cat_id" class="form-control" multiple>
               <option value="">--Select any category--</option>
               @foreach($categories as $key=>$cat_data)
                   <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
@@ -102,13 +102,13 @@
         </div>
         <div class="col-md-6">
         <div class="form-group">
-        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{old('lat')}}" class="form-control" disabled>
+        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{old('lat')}}" class="form-control" >
         @error('lat')
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
         <div class="form-group">
-         <input id="long" type="text" name="long" placeholder="Long"  value="{{old('long')}}" class="form-control" disabled>
+         <input id="long" type="text" name="long" placeholder="Long"  value="{{old('long')}}" class="form-control" >
         @error('long')
         <span class="text-danger">{{$message}}</span>
         @enderror
@@ -185,12 +185,11 @@ map.addMarker({
 
 <script>
   $('#cat_id').change(function(){
-    var cat_id=$(this).val();
-    // alert(cat_id);
+    var cat_id=$(this).val()+"";
     if(cat_id !=null){
       // Ajax call
       $.ajax({
-        url:"/admin/category/"+cat_id+"/child",
+        url:"/admin/categoryforprovider/"+cat_id+"/child",
         data:{
           _token:"{{csrf_token()}}",
           id:cat_id
@@ -203,6 +202,7 @@ map.addMarker({
           // console.log(response);
           var html_option="<option value=''>----Select child category----</option>"
           if(response.status){
+
             var data=response.data;
             // alert(data);
             if(response.data){

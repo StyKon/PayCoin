@@ -35,7 +35,7 @@ class Category extends Model
         return Category::with('child_cat')->where('status','active')->orderBy('title','ASC')->get();
     }
     public static function getAllChildBySlagCat($slug){
-        return Category::with('child_cat')->where('slug',$slug)->where('status','active')->orderBy('title','ASC')->get();
+        return Category::with('child_cat')->where('slug',$slug)->where('status','active')->first();
     }
 
     public function products(){

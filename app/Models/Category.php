@@ -29,7 +29,7 @@ class Category extends Model
         return $this->hasMany('App\Models\ChildCategory','cat_id','id')->where('status','active');
     }
     public function providers(){
-        return $this->hasMany('App\Models\Provider','cat_id','id');
+        return $this->belongsToMany( 'App\Models\Provider', 'categories_providers', 'cat_id', 'provider_id' );
     }
     public static function getAllParentWithChild(){
         return Category::with('child_cat')->where('status','active')->orderBy('title','ASC')->get();

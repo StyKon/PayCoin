@@ -11,7 +11,7 @@
 @if($agent->isMobile())
 @include('frontend.pages.Mobile.product-lists-mobile')
 @else
-@include('frontend.pages.Mobile.product-lists-mobile')
+@include('frontend.pages.Web.product-lists-web')
 @endif
 
 @endsection

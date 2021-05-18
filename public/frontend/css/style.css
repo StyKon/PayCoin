@@ -4917,3 +4917,11 @@ Version:1.0
 /*=============================
 	End Footer CSS
 ===============================*/
+.l-flex-child {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.l-flex-child .row{
+    margin-right: 0px;
+    margin-left: 0px;
+}

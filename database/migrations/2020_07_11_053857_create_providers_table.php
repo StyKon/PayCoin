@@ -22,12 +22,11 @@ class CreateProvidersTable extends Migration
             $table->string('phone1')->nullable();
             $table->string('phone2')->nullable();
             $table->string('adresse');
+            $table->enum('status',['active','inactive'])->default('inactive');
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
             $table->string('lat')->nullable();
             $table->string('long')->nullable();
-            $table->unsignedBigInteger('cat_id')->nullable();
-            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->timestamps();
         });
     }

@@ -27,6 +27,7 @@
               <th>Adresse</th>
               <th>Email</th>
               <th>Logo</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@
               <th>Adresse</th>
               <th>Email</th>
               <th>Logo</th>
+              <th>Status</th>
               <th>Action</th>
               </tr>
           </tfoot>
@@ -64,6 +66,13 @@
                             <img src="{{$logo[0]}}" class="img-fluid zoom" style="max-width:80px" alt="{{$provider->logo}}">
                         @else
                             <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid" style="max-width:80px" alt="avatar.png">
+                        @endif
+                    </td>
+                    <td>
+                        @if($provider->status=='active')
+                            <span class="badge badge-success">{{$provider->status}}</span>
+                        @else
+                            <span class="badge badge-warning">{{$provider->status}}</span>
                         @endif
                     </td>
                     <td>

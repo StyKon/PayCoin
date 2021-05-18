@@ -64,7 +64,7 @@
         </div>
         <div class="form-group">
           <label for="cat_id">Category <span class="text-danger">*</span></label>
-          <select name="cat_id" id="cat_id" class="form-control" multiple>
+          <select name="cat_id[]" id="cat_id" class="form-control" multiple>
               <option value="">--Select any category--</option>
               @foreach($categories as $key=>$cat_data)
                   <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
@@ -95,6 +95,15 @@
           @error('logo')
           <span class="text-danger">{{$message}}</span>
           @enderror
+        </div> <div class="form-group">
+          <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
+          <select name="status" class="form-control">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+          </select>
+          @error('status')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
         </div>
         <div  class="row">
         <div class="col-md-6">
@@ -113,6 +122,7 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
+
         </div>
 </div>
         <div class="form-group mb-3">

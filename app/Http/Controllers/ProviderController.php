@@ -49,6 +49,7 @@ class ProviderController extends Controller
             'phone2'=>'string|required',
             'adresse'=>'string|required',
             'email'=>'string|required',
+            'status'=>'required|in:active,inactive',
             'logo'=>'string|required',
             'lat'=>'string|required',
             'long'=>'string|required',
@@ -63,6 +64,7 @@ class ProviderController extends Controller
         }
         $data['slug']=$slug;
         $status=Provider::create($data);
+        $status->categorys()->sync($request->cat_id);
         $status->childcategorys()->sync($request->child_cat_id);
         if($status){
             request()->session()->flash('success','Provider successfully created');
@@ -96,10 +98,11 @@ class ProviderController extends Controller
         $categorys=Category::get();
         $childcategorys=ChildCategory::get();
         $child_cat_id=json_encode(DB::select('select child_cat_id from child_categories_providers where provider_id = ?', [$id]));
+        $cat_id=collect(DB::select('select cat_id from categories_providers where provider_id = ?', [$id]))->pluck('cat_id')->toArray();
         if(!$provider){
             request()->session()->flash('error','Provider not found');
         }
-        return view('backend.provider.edit')->with('provider',$provider)->with('categories',$categorys)->with('childcategorys',$childcategorys)->with('child_cat_id',$child_cat_id);
+        return view('backend.provider.edit')->with('provider',$provider)->with('categories',$categorys)->with('childcategorys',$childcategorys)->with('child_cat_id',$child_cat_id)->with('cat_id',$cat_id);
     }
 
     /**
@@ -119,6 +122,7 @@ class ProviderController extends Controller
             'phone1'=>'string|required',
             'phone2'=>'string|required',
             'adresse'=>'string|required',
+            'status'=>'required|in:active,inactive',
             'email'=>'string|required',
             'logo'=>'string|required',
             'lat'=>'string|required',
@@ -129,6 +133,7 @@ class ProviderController extends Controller
         $data=$request->all();
 
         $status=$provider->fill($data)->save();
+        $provider->categorys()->sync($request->cat_id);
         $provider->childcategorys()->sync($request->child_cat_id);
         if($status){
             request()->session()->flash('success','Provider successfully updated');

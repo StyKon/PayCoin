@@ -66,10 +66,10 @@
 
         <div class="form-group">
           <label for="cat_id">Category <span class="text-danger">*</span></label>
-          <select name="cat_id" id="cat_id" class="form-control">
+          <select name="cat_id[]" id="cat_id" class="form-control" multiple>
               <option value="">--Select any category--</option>
               @foreach($categories as $key=>$cat_data)
-                  <option value='{{$cat_data->id}}' {{(($provider->cat_id==$cat_data->id)? 'selected' : '')}}>{{$cat_data->title}}</option>
+                  <option value='{{$cat_data->id}}' @if(in_array($cat_data->id,$cat_id)) selected @endif>{{$cat_data->title}}</option>
               @endforeach
           </select>
         </div>
@@ -93,8 +93,19 @@
               </span>
           <input id="thumbnail" class="form-control" type="text" name="logo" value="{{$provider->logo}}">
         </div>
+
         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           @error('logo')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
+          <select name="status" class="form-control">
+            <option value="active" {{(($provider->status=='active')? 'selected' : '')}}>Active</option>
+            <option value="inactive" {{(($provider->status=='inactive')? 'selected' : '')}}>Inactive</option>
+        </select>
+          @error('status')
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
@@ -115,6 +126,7 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
+
         </div>
         <div class="form-group mb-3">
            <button class="btn btn-success" type="submit">Update</button>
@@ -191,7 +203,7 @@ map.addMarker({
             if(cat_id !=null){
                 // ajax call
                 $.ajax({
-                    url:"/admin/category/"+cat_id+"/child",
+                    url:"/admin/categoryforprovider/"+cat_id+"/child",
                     type:"POST",
                     data:{
                         _token:"{{csrf_token()}}"

@@ -224,8 +224,8 @@ class FrontendController extends Controller
     }
 
     public function productProvider(Request $request){
-        $products=Product::getProductByChildCategoryAndProvider($request->sub_slug,$request->slug_provider);
-        $smallcategorys=SmallCategory::find(Product::getSmallCatByChildCategoryAndProvider($request->sub_slug,$request->slug_provider));
+        $products=Product::getProductByChildCategoryAndProvider($request->slug,$request->sub_slug,$request->slug_provider);
+        $smallcategorys=SmallCategory::find(Product::getSmallCatByChildCategoryAndProvider($request->slug,$request->sub_slug,$request->slug_provider));
 
         if(request()->is('e-shop.loc/product-grids')){
             return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);

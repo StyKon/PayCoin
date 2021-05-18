@@ -52,17 +52,19 @@ class Product extends Model
         ->where('categories.slug',$slug)
         ->where('products.status','active')->paginate(8);
     }
-    public static function getProductByChildCategoryAndProvider($sub_slug,$slug_provider){
+    public static function getProductByChildCategoryAndProvider($slug,$sub_slug,$slug_provider){
         return Product::select('products.*')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
-        ->where('child_categories.slug',$sub_slug)
+        ->where('child_categories.slug',$sub_slug)->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
         ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
         ->where('providers.slug',$slug_provider)->where('products.status','active')->get();
     }
 
 
-    public static function getSmallCatByChildCategoryAndProvider($sub_slug,$slug_provider){
+    public static function getSmallCatByChildCategoryAndProvider($slug,$sub_slug,$slug_provider){
         return Product::select('small_categories.id')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
-        ->where('child_categories.slug',$sub_slug)
+        ->where('child_categories.slug',$sub_slug)->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
         ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
         ->where('providers.slug',$slug_provider)->where('products.status','active')
         ->leftJoin('small_categories', 'products.small_cat_id', '=', 'small_categories.id')->groupBy('small_categories.id')->get()->toArray();

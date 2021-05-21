@@ -125,6 +125,7 @@
               <option value="default" {{(($product->condition=='default')? 'selected':'')}}>Default</option>
               <option value="new" {{(($product->condition=='new')? 'selected':'')}}>New</option>
               <option value="hot" {{(($product->condition=='hot')? 'selected':'')}}>Hot</option>
+              <option value="rec" {{(($product->condition=='rec')? 'selected':'')}}>Recommended</option>
           </select>
         </div>
 
@@ -202,7 +203,7 @@
 <script>
   var  child_cat_id='{{$product->child_cat_id}}';
   var  small_cat_id='{{$product->small_cat_id}}';
-  
+
         // alert(child_cat_id);
         $('#cat_id').change(function(){
             var cat_id=$(this).val();
@@ -250,8 +251,8 @@
             $('#cat_id').change();
         }
         /**************************************** */
-  
- 
+
+
         // alert(child_cat_id);
         $('#child_cat_id').change(function(){
             var child_cat_id=$(this).val();

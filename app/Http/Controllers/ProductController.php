@@ -66,7 +66,7 @@ class ProductController extends Controller
             'small_cat_id'=>'nullable|exists:small_categories,id',
             'is_featured'=>'sometimes|in:1',
             'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
+            'condition'=>'required|in:default,new,hot,rec',
             'price'=>'required|numeric',
             'discount'=>'nullable|numeric'
         ]);
@@ -153,7 +153,7 @@ class ProductController extends Controller
             'is_featured'=>'sometimes|in:1',
             'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
+            'condition'=>'required|in:default,new,hot,rec',
             'price'=>'required|numeric',
             'discount'=>'nullable|numeric'
         ]);

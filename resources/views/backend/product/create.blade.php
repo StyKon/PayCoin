@@ -126,6 +126,7 @@
               <option value="default">Default</option>
               <option value="new">New</option>
               <option value="hot">Hot</option>
+              <option value="rec">Recommended</option>
           </select>
         </div>
 

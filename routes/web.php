@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['register'=>false]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
+Route::get('partner/login','ProviderPagesController@login')->name('login.provider');
+Route::post('partner/login','ProviderPagesController@loginSubmit')->name('login.providersubmit');
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');
 Route::get('user/logout','FrontendController@logout')->name('user.logout');
 
@@ -187,7 +189,8 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
 
 });
 Route::group(['prefix'=>'/provider','middleware'=>['provider']],function(){
-    Route::get('/qjdlqskdlsqklmdsqkùldkqsùdsq','HomeController@index')->name('provider');
+    Route::get('/qjdlqskdlsqklmdsqkùldkqsùdsq','ProviderPagesController@index')->name('provider');
+    Route::get('/order','ProviderPagesController@orders')->name('order-provider-index');
 
 });
 Route::group(['prefix'=>'/livreur','middleware'=>['livreur']],function(){

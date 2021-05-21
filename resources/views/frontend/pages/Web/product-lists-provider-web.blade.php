@@ -40,7 +40,7 @@
 
       @if(count($products))
 	   @foreach($products as $product)
-       <div class="col-6  isotope-item {{$product->small_cat_id}}">
+       <div class="col-2  isotope-item {{$product->small_cat_id}}">
                                         <div class="single-product">
                                             <div class="product-img">
                                                 <a href="{{route('product-detail',$product->slug)}}">
@@ -56,7 +56,6 @@
                                                 </a>
                                                 <div class="button-head">
                                                     <div class="product-action">
-                                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                         <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                     </div>
                                                     <div class="product-action-2">
@@ -74,6 +73,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 	   @endforeach
 	  @else
 		<h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
@@ -166,5 +166,10 @@ $(isotopeButton).each(function(){
 .col-6{
  padding-left:2px;
 padding-right:2px;
-}</style>
+}
+.isotope-item{
+    padding-right: 4px;
+    padding-left: 4px;
+}
+</style>
 @endpush

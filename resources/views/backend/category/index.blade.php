@@ -21,8 +21,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
-              <th>Is Parent</th>
-              <th>Parent Category</th>
               <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
@@ -33,8 +31,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
-              <th>Is Parent</th>
-              <th>Parent Category</th>
               <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
@@ -43,21 +39,10 @@
           <tbody>
 
             @foreach($categories as $category)
-              @php
-              $parent_cats=DB::table('categories')->select('title')->where('id',$category->parent_id)->get();
-              // dd($parent_cats);
-
-              @endphp
                 <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->title}}</td>
                     <td>{{$category->slug}}</td>
-                    <td>{{(($category->is_parent==1)? 'Yes': 'No')}}</td>
-                    <td>
-                        @foreach($parent_cats as $parent_cat)
-                            {{$parent_cat->title}}
-                        @endforeach
-                    </td>
                     <td>
                         @if($category->photo)
                             <img src="{{$category->photo}}" class="img-fluid" style="max-width:80px" alt="{{$category->photo}}">

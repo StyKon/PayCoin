@@ -59,6 +59,10 @@ Version:1.0
 .color-plate.active{
 	right:0;
 }
+.sleft{
+	background: #F6F7FB;
+}
+
 .color-plate .color-plate-icon {
 	position: absolute;
 	left: -48px;
@@ -729,6 +733,7 @@ Version:1.0
 	color:#fff;
 	background:#F7941D;
 }
+
 /* Search Form */
 .header.shop .search-top {
 	opacity: 1;
@@ -1775,19 +1780,20 @@ Version:1.0
 .single-product .product-img a span.price-dec {
 	background-color: #f6931d;
 	display: inline-block;
-	font-size: 11px;
+	font-size: 10px;
 	color: #fff;
-	right: 20px;
-	top: 20px;
-	padding: 1px 16px;
-	font-weight: 700;
+	right: 5px;
+	top: 5px;
+	padding: 1px 1px;
+	font-weight: 500;
 	border-radius: 0;
 	text-align: center;
 	position: absolute;
 	text-transform: uppercase;
 	border-radius: 30px;
-	height: 26px;
-	line-height: 25px;
+  width: 35px;
+	height: 12px;
+	line-height: 10px;
 }
 .single-product .product-img a span.new {
 	background-color: #8493ca;
@@ -1994,9 +2000,6 @@ Version:1.0
 }
 .single-product .product-img .shop-list-quickview a i {
   line-height: 50px;
-}
-.single-product .product-content{
-	margin-top:20px;
 }
 .single-product .product-img:hover.default-overlay::before {
   background-color: rgba(38, 38, 38, 0.2);
@@ -4914,3 +4917,11 @@ Version:1.0
 /*=============================
 	End Footer CSS
 ===============================*/
+.l-flex-child {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.l-flex-child .row{
+    margin-right: 0px;
+    margin-left: 0px;
+}

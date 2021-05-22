@@ -224,8 +224,8 @@
 													</li>
 
                                             <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">About Us</a></li>
-                                            <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Products</a></li>
-                                                {{Helper::getHeaderCategory() }}
+                                      <li class="{{Request::path()=='category-provider' ? 'active' : ''}}"><a href="{{route('product-cat')}}">Category</a></li>
+
                                                 {{--  <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Blog</a></li> --}}
 
                                             <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Contact Us</a></li>
@@ -241,35 +241,8 @@
             </div>
         </div>
     </div>
-
-<nav class="bottom-nav">
-<button class="j931 j1107 j1108">
-    <span class="button-content-wrapper">
-    <span class="material-icons">home</span>
-    <span class="label">Home</span>
-    </span>
-  </button>
-  <button class="j931 j1107 j1108">
-    <span class="button-content-wrapper">
-    <span class="count">{{Helper::cartCount()}}</span>
-      <span class="material-icons">shopping_cart</span>
-      <span class="label">Cart</span>
-     </span>
-  </button>
-  <button class="j931 j1107 j1108">
-  <span class="button-content-wrapper">
-        <span class="count">{{Helper::wishlistCount()}}</span>
-      <span class="material-icons">favorite_border</span>
-      <span class="label">Favorite</span>
-    </span>
-  </button>
-
-  <button class="j931 j1107 j1108">
-    <span class="button-content-wrapper">
-      <span class="material-icons">account_circle</span>
-      <span class="label">Profil</span>
-                                           </span>
-  </button>
-</nav>
+@if($agent->isMobile())
+@include('frontend.layouts.Mobile.nav-mobile')
+@endif
  {{--   <!--/ End Header Inner -->--}}
 </header>

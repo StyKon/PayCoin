@@ -46,16 +46,15 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
-        @php 
-        $roles=DB::table('users')->select('role')->get();
-        @endphp
         <div class="form-group">
             <label for="role" class="col-form-label">Role</label>
             <select name="role" class="form-control">
                 <option value="">-----Select Role-----</option>
-                @foreach($roles as $role)
-                    <option value="{{$role->role}}">{{$role->role}}</option>
-                @endforeach
+                    <option value="admin">admin</option>
+                    <option value="user">user</option>
+                    <option value="provider">provider</option>
+                    <option value="livreur">livreur</option>
+
             </select>
           @error('role')
           <span class="text-danger">{{$message}}</span>

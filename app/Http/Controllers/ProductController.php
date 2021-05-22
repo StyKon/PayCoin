@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ChildCategory;
+use App\Models\SmallCategory;
 use App\Models\Brand;
 use App\Models\Provider;
 
@@ -34,9 +36,11 @@ class ProductController extends Controller
     {
         $brand=Brand::get();
         $provider=Provider::get();
-        $category=Category::where('is_parent',1)->get();
+        $category=Category::get();
+        $childcategorys=ChildCategory::get();
+        $smallcategorys=SmallCategory::get();
         // return $category;
-        return view('backend.product.create')->with('categories',$category)->with('brands',$brand)->with('providers',$provider);
+        return view('backend.product.create')->with('categories',$category)->with('brands',$brand)->with('providers',$provider)->with('childcategorys',$childcategorys)->with('smallcategorys',$smallcategorys);
     }
 
     /**
@@ -58,10 +62,11 @@ class ProductController extends Controller
             'cat_id'=>'required|exists:categories,id',
             'brand_id'=>'nullable|exists:brands,id',
             'provider_id'=>'nullable|exists:providers,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
+            'child_cat_id'=>'nullable|exists:child_categories,id',
+            'small_cat_id'=>'nullable|exists:small_categories,id',
             'is_featured'=>'sometimes|in:1',
             'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
+            'condition'=>'required|in:default,new,hot,rec',
             'price'=>'required|numeric',
             'discount'=>'nullable|numeric'
         ]);
@@ -116,7 +121,7 @@ class ProductController extends Controller
         $brand=Brand::get();
         $provider=Provider::get();
         $product=Product::findOrFail($id);
-        $category=Category::where('is_parent',1)->get();
+        $category=Category::get();
         $items=Product::where('id',$id)->get();
         // return $items;
         return view('backend.product.edit')->with('product',$product)
@@ -143,11 +148,12 @@ class ProductController extends Controller
             'size'=>'nullable',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
+            'child_cat_id'=>'nullable|exists:child_categories,id',
+            'small_cat_id'=>'nullable|exists:small_categories,id',
             'is_featured'=>'sometimes|in:1',
             'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
+            'condition'=>'required|in:default,new,hot,rec',
             'price'=>'required|numeric',
             'discount'=>'nullable|numeric'
         ]);

@@ -6,16 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
 class Product extends Model
 {
-    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','provider_id','discount','status','photo','size','stock','is_featured','condition'];
+    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','small_cat_id','price','brand_id','provider_id','discount','status','photo','size','stock','is_featured','condition'];
 
     public function cat_info(){
         return $this->hasOne('App\Models\Category','id','cat_id');
     }
     public function sub_cat_info(){
-        return $this->hasOne('App\Models\Category','id','child_cat_id');
+        return $this->hasOne('App\Models\ChildCategory','id','child_cat_id');
     }
+    public function small_cat_info(){
+        return $this->hasOne('App\Models\SmallCategory','id','small_cat_id');
+    }
+
     public static function getAllProduct(){
-        return Product::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
+        return Product::orderBy('id','desc')->paginate(10);
     }
 
     public function rel_prods(){
@@ -43,4 +47,26 @@ class Product extends Model
         return $this->hasMany(Wishlist::class)->whereNotNull('cart_id');
     }
 
+    public static function getProductByCategorySlug($slug){
+        return Product::select('products.*')->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
+        ->where('products.status','active')->paginate(8);
+    }
+    public static function getProductByChildCategoryAndProvider($slug,$sub_slug,$slug_provider){
+        return Product::select('products.*')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
+        ->where('child_categories.slug',$sub_slug)->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
+        ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
+        ->where('providers.slug',$slug_provider)->where('products.status','active')->get();
+    }
+
+
+    public static function getSmallCatByChildCategoryAndProvider($slug,$sub_slug,$slug_provider){
+        return Product::select('small_categories.id')->leftJoin('child_categories', 'products.child_cat_id', '=', 'child_categories.id')
+        ->where('child_categories.slug',$sub_slug)->leftJoin('categories', 'products.cat_id', '=', 'categories.id')
+        ->where('categories.slug',$slug)
+        ->leftJoin('providers', 'products.provider_id', '=', 'providers.id')
+        ->where('providers.slug',$slug_provider)->where('products.status','active')
+        ->leftJoin('small_categories', 'products.small_cat_id', '=', 'small_categories.id')->groupBy('small_categories.id')->get()->toArray();
+   }
 }

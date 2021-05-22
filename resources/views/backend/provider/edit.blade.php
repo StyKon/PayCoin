@@ -63,6 +63,26 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
+
+        <div class="form-group">
+          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <select name="cat_id[]" id="cat_id" class="form-control" multiple>
+              <option value="">--Select any category--</option>
+              @foreach($categories as $key=>$cat_data)
+                  <option value='{{$cat_data->id}}' @if(in_array($cat_data->id,$cat_id)) selected @endif>{{$cat_data->title}}</option>
+              @endforeach
+          </select>
+        </div>
+
+        {{-- {{$product->child_cat_id}} --}}
+        <div class="form-group {{(($provider->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
+          <label for="child_cat_id">Child Category</label>
+          <select name="child_cat_id[]" id="child_cat_id" class="form-control" multiple>
+              <option value="">--Select any child category--</option>
+
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Logo <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -73,8 +93,19 @@
               </span>
           <input id="thumbnail" class="form-control" type="text" name="logo" value="{{$provider->logo}}">
         </div>
+
         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           @error('logo')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
+          <select name="status" class="form-control">
+            <option value="active" {{(($provider->status=='active')? 'selected' : '')}}>Active</option>
+            <option value="inactive" {{(($provider->status=='inactive')? 'selected' : '')}}>Inactive</option>
+        </select>
+          @error('status')
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
@@ -84,17 +115,18 @@
         </div>
         <div class="col-md-6">
         <div class="form-group">
-        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{$provider->lat}}" class="form-control" disabled>
+        <input id="lat" type="text" name="lat" placeholder="lat"  value="{{$provider->lat}}" class="form-control" >
         @error('lat')
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
         <div class="form-group">
-         <input id="long" type="text" name="long" placeholder="Long"  value="{{$provider->long}}" class="form-control" disabled>
+         <input id="long" type="text" name="long" placeholder="Long"  value="{{$provider->long}}" class="form-control" >
         @error('long')
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
+
         </div>
         <div class="form-group mb-3">
            <button class="btn btn-success" type="submit">Update</button>
@@ -160,5 +192,55 @@ map.addMarker({
     }
 });
 @endisset
+</script>
+
+<script>
+  var  child_cat_id='{{$child_cat_id}}'.match(/\d/g);
+        // alert(child_cat_id);
+        $('#cat_id').change(function(){
+            var cat_id=$(this).val();
+
+            if(cat_id !=null){
+                // ajax call
+                $.ajax({
+                    url:"/admin/categoryforprovider/"+cat_id+"/child",
+                    type:"POST",
+                    data:{
+                        _token:"{{csrf_token()}}"
+                    },
+                    success:function(response){
+                        if(typeof(response)!='object'){
+                            response=$.parseJSON(response);
+                        }
+                        var html_option="<option value=''>--Select any one--</option>";
+                        if(response.status){
+                            var data=response.data;
+                            if(response.data){
+                                $('#child_cat_div').removeClass('d-none');
+                                $.each(data,function(id,title){
+                                    html_option += "<option value='"+id+"' "+(child_cat_id.includes(id) ? 'selected ' : '')+">"+title+"</option>";
+                                });
+                            }
+                            else{
+                                console.log('no response data');
+                            }
+                        }
+                        else{
+                            $('#child_cat_div').addClass('d-none');
+                        }
+                        $('#child_cat_id').html(html_option);
+
+                    }
+                });
+            }
+            else{
+            }
+
+        });
+        if(child_cat_id!=null){
+            $('#cat_id').change();
+        }
+        /**************************************** */
+
 </script>
 @endpush

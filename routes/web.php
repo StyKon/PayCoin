@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['register'=>false]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
+Route::get('partner/login','ProviderPagesController@login')->name('login.provider');
+Route::post('partner/login','ProviderPagesController@loginSubmit')->name('login.providersubmit');
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');
 Route::get('user/logout','FrontendController@logout')->name('user.logout');
 
@@ -36,8 +38,9 @@ Route::get('/contact','FrontendController@contact')->name('contact');
 Route::post('/contact/message','MessageController@store')->name('contact.store');
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
-Route::get('/product-cat/{slug}','FrontendController@productCat')->name('product-cat');
-Route::get('/product-sub-cat/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
+Route::get('/category-provider','FrontendController@productCat')->name('product-cat');
+//Route::get('/category-product/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
+Route::get('/category-provider/{slug}/{sub_slug}/{slug_provider}','FrontendController@productProvider')->name('product-provider');
 Route::get('/product-brand/{slug}','FrontendController@productBrand')->name('product-brand');
 // Cart section
 Route::get('/add-to-cart/{slug}','CartController@addToCart')->name('add-to-cart')->middleware('user');
@@ -59,7 +62,7 @@ Route::post('cart/order','OrderController@store')->name('cart.order');
 Route::get('order/pdf/{id}','OrderController@pdf')->name('order.pdf');
 Route::get('/income','OrderController@incomeChart')->name('product.order.income');
 // Route::get('/user/chart','AdminController@userPieChart')->name('user.piechart');
-Route::get('/product-grids','FrontendController@productGrids')->name('product-grids');
+Route::get('/category-product/{slug}','FrontendController@productGrids')->name('product-grids');
 Route::get('/product-lists','FrontendController@productLists')->name('product-lists');
 Route::match(['get','post'],'/filter','FrontendController@productFilter')->name('shop.filter');
 // Order Track
@@ -112,10 +115,14 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');
     // Category
     Route::resource('/category','CategoryController');
+    Route::resource('childcategory','ChildCategoryController');
+    Route::resource('smallcategory','SmallCategoryController');
     // Product
     Route::resource('/product','ProductController');
     // Ajax for sub category
     Route::post('/category/{id}/child','CategoryController@getChildByParent');
+    Route::post('/categoryforprovider/{id}/child','CategoryController@getChildByParentForProvider');
+    Route::post('/childcategory/{id}/small','ChildCategoryController@getSmallByParent');
     // POST category
   //  Route::resource('/post-category','PostCategoryController');
     // Post tag
@@ -181,7 +188,15 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::post('change-password', 'HomeController@changPasswordStore')->name('change.password');
 
 });
+Route::group(['prefix'=>'/provider','middleware'=>['provider']],function(){
+    Route::get('/qjdlqskdlsqklmdsqkùldkqsùdsq','ProviderPagesController@index')->name('provider');
+    Route::get('/order','ProviderPagesController@orders')->name('order-provider-index');
 
+});
+Route::group(['prefix'=>'/livreur','middleware'=>['livreur']],function(){
+    Route::get('/qjdlqskdlsqklmdsqkùldkqsùdsq','HomeController@index')->name('livreur');
+
+});
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

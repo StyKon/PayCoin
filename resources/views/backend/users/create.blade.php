@@ -54,6 +54,8 @@
                     <option value="user">user</option>
                     <option value="provider">provider</option>
                     <option value="livreur">livreur</option>
+                    <option value="designer">designer</option>
+                    <option value="cmmanager">cmmanager</option>
 
             </select>
           @error('role')

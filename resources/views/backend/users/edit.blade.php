@@ -60,6 +60,8 @@
                     <option value="user" {{(($role->role=='user') ? 'selected' : '')}}>user</option>
                     <option value="provider" {{(($role->role=='provider') ? 'selected' : '')}}>provider</option>
                     <option value="livreur" {{(($role->role=='livreur') ? 'selected' : '')}}>livreur</option>
+                    <option value="designer" {{(($role->role=='designer') ? 'selected' : '')}}>designer</option>
+                    <option value="cmmanager" {{(($role->role=='cmmanager') ? 'selected' : '')}}>cmmanager</option>
                 @endforeach
             </select>
           @error('role')
